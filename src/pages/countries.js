@@ -30,7 +30,7 @@ export const Countries = () => {
     const [singlecountry, setSinglecountry] = useState();
     const [showsinglecountry, setShowsinglecountry] = useState(false);
 
-    const [sigleCountryToShow, setSingleCountryToShow] = useState([]);
+    const [singleCountryToShow, setSingleCountryToShow] = useState([]);
 
 
 
@@ -87,6 +87,8 @@ export const Countries = () => {
 
 
     
+
+
     // Haetaan kaikki maakoodin (cca2) perusteella
     useEffect(() => {
         const fetchSingleCountry = async () => {
@@ -130,6 +132,8 @@ export const Countries = () => {
 
     const rows = allCountries || [];
 
+    const rowsOne = singleCountryToShow || [];
+
 
     // datatablen sarakkeet materaialUI
     const columnsAll = [
@@ -155,6 +159,29 @@ export const Countries = () => {
 
 
 
+        const columnsSingle = [
+            {
+                title: "Name",
+                field: "name.official",
+            },
+            {
+                title: "Sub region",
+                field: "region",
+            },
+            {
+                title: "Flag",
+                field: "flag",
+                filtering: false
+            },
+            {
+                title: "Population",
+                field: "population",
+                filtering: false
+            },
+        ];
+    
+    
+
 
 
 
@@ -170,19 +197,25 @@ export const Countries = () => {
 
                 // <SingleCountry />
 
-                <div>
+      
+
+               <MaterialTable
+                    title={"Chosen country"}
+                    data={rowsOne}
+                    columns={columnsSingle}
+                   
+                />
+
+            
 
 
 
 
-                </div>
 
 
 
-
-
-
-                : <MaterialTable
+                : 
+                <MaterialTable
                     title={"Countries of the world"}
                     data={rows}
                     columns={columnsAll}
@@ -205,6 +238,11 @@ export const Countries = () => {
                 />
 
             }
+
+
+
+
+
 
 
         </div>
