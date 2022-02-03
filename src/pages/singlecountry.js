@@ -14,11 +14,6 @@ export const SingleCountry = () => {
     let chosen = url.slice(-2);
 
     const [singleCountryToShow, setSingleCountryToShow] = useState([]);
-    const [countryCode, setCountryCode] = useState("");
-    const [countryFlag, setCountryFlag] = useState("");
-    const [countryName, setCountryName] = useState("");
-    const [countryCapital, setCountryCapital] = useState("");
-    const [countryPop, setCountryPop] = useState("");
     const [countryLang, setCountryLang] = useState([]);
     const [countryCur, setCountryCur] = useState([]);
 
@@ -28,22 +23,18 @@ export const SingleCountry = () => {
     // Haetaan kaikki maakoodin (cca2) perusteella
     useEffect(() => {
         const fetchSingleCountry = async () => {
-            console.log("Haetaan valittu maa ", chosen);
+            // console.log("Haetaan valittu maa ", chosen);
 
             const r = await fetch('https://restcountries.com/v2/alpha/' + chosen);
-
             console.log("Statuscode: ", r.status);
-
             const data = await r.json();
-            console.log("valittu maa OMA: ", data);
-            console.log("valittu maa pituus: ", data.currencies[0].name);
 
+            // jos puhuttuja kieliä tai valuuttoja usemapi, käydään läpi
             for (var i = 0; i < data.languages.length; i++) {
                 countryLang.push(data.languages[i].name);
                 if (i < data.languages.length) {
                     countryLang.push(", ");
                 }
-
             }
             for (var i = 0; i < data.currencies.length; i++) {
                 countryCur.push(data.currencies[i].name);
@@ -70,7 +61,7 @@ export const SingleCountry = () => {
             <div className='flag'  >
                 <img src={singleCountryToShow.flag} height="200" />
                 <div style={{ paddingTop: '10%' }}>
-                    <Link to='/' style={{ textDecoration: 'none' }}> 
+                    <Link to='/' style={{ textDecoration: 'none' }}>
                         <Button color="primary" variant="contained" href="" > Back to list  </Button>
                     </Link>
                 </div>
@@ -84,19 +75,19 @@ export const SingleCountry = () => {
                         </tr>
                         <tr>
                             <td><h4>Capital City: </h4></td>
-                            <td style={{paddingLeft: '10px'}}>{singleCountryToShow.capital}</td>
+                            <td style={{ paddingLeft: '10px' }}>{singleCountryToShow.capital}</td>
                         </tr>
                         <tr>
                             <td><h4>Population: </h4></td>
-                            <td colSpan={2} style={{paddingLeft: '10px'}}>{singleCountryToShow.population}</td>
+                            <td colSpan={2} style={{ paddingLeft: '10px' }}>{singleCountryToShow.population}</td>
                         </tr>
                         <tr>
                             <td ><h4>Spoken languages: </h4></td>
-                            <td colSpan={2} style={{paddingLeft: '10px'}}>{singleCountryToShow.languages} </td>
+                            <td colSpan={2} style={{ paddingLeft: '10px' }}>{singleCountryToShow.languages} </td>
                         </tr>
                         <tr>
                             <td><h4>Currencies: </h4></td>
-                            <td colSpan={2} style={{paddingLeft: '10px'}}>{singleCountryToShow.currencies}</td>
+                            <td colSpan={2} style={{ paddingLeft: '10px' }}>{singleCountryToShow.currencies}</td>
                         </tr>
                     </tbody>
                 </table>
