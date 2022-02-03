@@ -1,5 +1,11 @@
 .App {
   text-align: center;
+  background-image: url("/public/dariusz-sankowski-3OiYMgDKJ6k-unsplash.jpg");
+  background-size: cover;
+  background-repeat: 'no-repeat';
+  padding-bottom: 30%;
+
+
 }
 
 .App-logo {
@@ -35,4 +41,39 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+
+.content-container{
+  grid-template-rows: auto;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+
+}
+
+.flag-container{
+  text-align: left;
+
+}
+
+.country-container{
+  display: grid;
+  grid-template-areas: "flag info info info";
+  background-color: rgba(230, 230, 230, 0.959);
+  padding-bottom: 5%;
+}
+
+.flag{
+  grid-area: flag;
+  padding-top: 10%;
+}
+
+.info{
+  grid-area: info;
+  text-align: left;
+  padding-right: 5%;
+
 }

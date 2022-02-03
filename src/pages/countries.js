@@ -1,41 +1,21 @@
 import './../App.css';
 import React from "react";
 
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-
-
 import MaterialTable from "material-table";
-import TablePagination from '@mui/material/TablePagination';
-
 import { useState, useEffect } from 'react';
-
-import { SingleCountry } from './singlecountry';
-
+import { Link} from 'react-router-dom';
 
 
-import { AddBox, ArrowDownward, Check, ChevronLeft, ChevronRight, DeleteOutline, Edit, FilterList, FirstPage, LastPage, Remove, SaveAlt, Search, ViewColumn } from "@material-ui/icons";
+import { AddBox, ArrowDownward, Check, ChevronLeft, ChevronRight, DeleteOutline, Edit, FilterList, FirstPage, LastPage, Remove, RemoveRedEyeOutlined, SaveAlt, Search, ViewColumn } from "@material-ui/icons";
 import { forwardRef as onChangePage } from 'react';
 import Clear from '@material-ui/icons/Clear';
 
 
 
+//kaikki maat
 export const Countries = () => {
 
-
     const [allCountries, setAllCountries] = useState([]);
-
-
-    const [singlecountry, setSinglecountry] = useState();
-    const [showsinglecountry, setShowsinglecountry] = useState(false);
-
-    const [singleCountryToShow, setSingleCountryToShow] = useState([]);
-
-
-
-
-
 
 
     const tableIcons = {
@@ -61,9 +41,6 @@ export const Countries = () => {
 
 
 
-
-
-
     // Haetaan kaikki maat 
     useEffect(() => {
         const fetchAllCountries = async () => {
@@ -80,75 +57,30 @@ export const Countries = () => {
 
         }
         fetchAllCountries();
-
     }, [])
 
 
 
 
-    
 
-
-    // Haetaan kaikki maakoodin (cca2) perusteella
-    useEffect(() => {
-        const fetchSingleCountry = async () => {
-            console.log("Haetaan valittu maa ", singlecountry);
-
-            const r = await fetch('https://restcountries.com/v2/alpha/' + singlecountry);
-
-            console.log("Statuscode: ", r.status);
-
-            const data = await r.json();
-            console.log("valittu maa: ", data);
-            console.log("valittu maa pituus: ", data.length);
-            setSingleCountryToShow(data);
-
-        }
-        if (singlecountry != "") {fetchSingleCountry()};
-
-    }, [singlecountry])
-
-
-
-
-
-
-
-    function showSingleCountry(row){
-
-        console.log("maakoodi cca2", row.cca2);
-
-        setSinglecountry(row.cca2);
-
-
-        setShowsinglecountry(true);
-
-    }
-    
-
-
-
-
-
-    const rows = allCountries || [];
-
-    const rowsOne = singleCountryToShow || [];
-
-
-    // datatablen sarakkeet materaialUI
     const columnsAll = [
+        {
+            title: "Flag",
+            field: "flag",
+            filtering: false,
+            render: rowData => <Link to={'/details/' + rowData.cca2}> {rowData.flag} </Link>, 
+            cellStyle: { fontSize: 25 },
+        },
         {
             title: "Name",
             field: "name.official",
+            render: rowData => <Link to={'/details/' + rowData.cca2}>  {rowData.name.official}</Link>,
+            cellStyle: {  padding: '5px' },
+
         },
         {
             title: "Sub region",
             field: "region",
-        },
-        {
-            title: "Flag",
-            field: "flag",
-            filtering: false
         },
         {
             title: "Population",
@@ -157,64 +89,14 @@ export const Countries = () => {
         },
     ];
 
+    const rows = allCountries || [];
 
 
-        const columnsSingle = [
-            {
-                title: "Name",
-                field: "name.official",
-            },
-            {
-                title: "Sub region",
-                field: "region",
-            },
-            {
-                title: "Flag",
-                field: "flag",
-                filtering: false
-            },
-            {
-                title: "Population",
-                field: "population",
-                filtering: false
-            },
-        ];
-    
-    
-
-
-
-
+  
 
     return (
-        <div >
+        <div padding>
 
-
-            {showsinglecountry ?
-
-
-
-
-                // <SingleCountry />
-
-      
-
-               <MaterialTable
-                    title={"Chosen country"}
-                    data={rowsOne}
-                    columns={columnsSingle}
-                   
-                />
-
-            
-
-
-
-
-
-
-
-                : 
                 <MaterialTable
                     title={"Countries of the world"}
                     data={rows}
@@ -223,28 +105,15 @@ export const Countries = () => {
                         search: true,
                         paging: true,
                         filtering: true,
-                        pageSize: 20
+                        pageSize: 20,
+                        headerStyle: {
+                            backgroundColor: '#01579b',
+                            color: '#FFF'
+                          }
                     }}
                     icons={tableIcons}
-
-
-                    actions={[
-                        {
-                            icon: AddBox,
-                            tooltip: 'Read more',
-                            onClick: (event, rowData) => showSingleCountry(rowData)
-                        },
-                    ]}
                 />
-
-            }
-
-
-
-
-
-
-
+          
         </div>
     );
 }

@@ -2,9 +2,19 @@ import logo from './logo.svg';
 import './App.css';
 
 import {Countries} from './pages/countries';
+import { SingleCountry } from './pages/singlecountry';
+import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+import { useState } from 'react';
+
+
 
 
 function App() {
+
+  const [chosen, setChosen] = useState();
+  const [reitti, setReitti] = useState("/");
+
+
   return (
     <div className="App">
 
@@ -24,7 +34,24 @@ function App() {
       </header> */}
 
 
-      <Countries />
+      {/* <Countries /> */}
+      <div className='content-container'>
+      <BrowserRouter>
+      <Routes>
+
+      {/* <Route exact path="/details/:id" element={<SingleCountry  chosenCountry={chosen}/>} />
+      <Route path="/" element={<Countries setReitti={setReitti} setChosen={setChosen}/>} />
+       */}
+      <Route exact path="/details/:id" element={<SingleCountry />} />
+      <Route path="/" element={<Countries />} />
+
+
+
+      </Routes>
+
+
+      </BrowserRouter>
+      </div>
 
 
     </div>
