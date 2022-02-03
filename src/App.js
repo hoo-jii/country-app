@@ -1,6 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 
+import {Countries} from './pages/countries';
+
+
 function App() {
   return (
     <div className="App">
@@ -20,7 +23,10 @@ function App() {
         </a>
       </header> */}
 
-      <p>testi</p>
+
+      <Countries />
+
+
     </div>
   );
 }
